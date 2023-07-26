@@ -1,16 +1,16 @@
 from logging.config import fileConfig
-
+from src.config import *
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-from src.auth.models import *
-from src.social.models import *
 from alembic import context
-from src.database import Base
-
+from src.social.models import *
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
+#
+section = config.config_ini_section
+config.set_section_option(section, "DATABASE_URL", f'postgresql+asyncpg://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}')
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
