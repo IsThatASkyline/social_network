@@ -1,6 +1,4 @@
-import asyncio
 from typing import AsyncGenerator
-import pytest
 from fastapi.testclient import TestClient
 from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
@@ -9,6 +7,9 @@ from sqlalchemy.pool import NullPool
 from src.config import TEST_DB_NAME, TEST_DB_PASS, TEST_DB_PORT, TEST_DB_USER, TEST_DB_HOST
 from src.database import get_async_session, Base
 from src.main import app
+import pytest
+import asyncio
+
 
 DATABASE_URL_TEST = f'postgresql+asyncpg://{TEST_DB_USER}:{TEST_DB_PASS}@{TEST_DB_HOST}:{TEST_DB_PORT}/{TEST_DB_NAME}'
 
@@ -23,6 +24,7 @@ async def override_get_async_session() -> AsyncGenerator[AsyncSession, None]:
 
 app.dependency_overrides[get_async_session] = override_get_async_session
 
+
 @pytest.fixture(autouse=True, scope='session')
 async def prepare_database():
     async with engine_test.begin() as conn:
@@ -31,8 +33,6 @@ async def prepare_database():
     async with engine_test.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
 
-
-# SETUP
 
 @pytest.fixture(scope='session')
 def event_loop(request):
@@ -50,7 +50,6 @@ async def client_author() -> AsyncGenerator[AsyncClient, None]:
     async with AsyncClient(app=app, base_url='http://test') as ac:
         yield ac
 
-# Сделать фикстуру с авторизованным клиентом
 
 @pytest.fixture(scope='session')
 async def client_guest() -> AsyncGenerator[AsyncClient, None]:
