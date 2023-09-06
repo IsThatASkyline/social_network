@@ -1,6 +1,6 @@
 # social_network
 
-![image](https://github.com/artklk12/social_network/assets/67318020/207aa4d4-d30c-46a9-ba9f-1a7f95e00a41)
+![image](https://github.com/IsThatASkyline/social_network/assets/67318020/207aa4d4-d30c-46a9-ba9f-1a7f95e00a41)
 
 
 ## Description
@@ -19,7 +19,7 @@ Simple REST API social network with FastAPI
 ## Install
 First you need clone git repo using
 ```
-git clone https://github.com/artklk12/social_network.git
+git clone https://github.com/IsThatASkyline/social_network.git
 cd social_network
 ```
 
